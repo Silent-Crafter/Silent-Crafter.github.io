@@ -1,0 +1,69 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef struct _Employee {
+    int id;
+    string name;
+    string designation;
+    int salary;
+} Employee;
+
+typedef struct Index {
+    int index[32][2] = {0};
+} Index;
+
+class EmployeeDB {
+private:
+    string filename;
+    Index index;
+
+public:
+    EmployeeDB(): filename("employee.dat") {  }
+    ~EmployeeDB() { remove("employee.dat"); }
+
+    void addRecord(const Employee& emp) {
+
+        size_t lastPos = index.index.rbegin()->second;
+        index.index.emplace_back(emp.id, lastPos+sizeof(Employee));
+        updateIndex();
+
+        fstream outfile(filename, ios::app | ios::binary);
+
+        outfile.close();
+    }
+
+    void deleteRecord() {}
+    void searchRecord() {}
+
+    void updateIndex() {
+        fstream outfile(filename, ios::out | ios::binary);
+        outfile.close();
+    }
+
+    void display() {
+        cout << "ID\tNAME\tDESIGNATION\tSALARY" << endl;
+
+        Employee emp;
+
+        fstream infile(filename, ios::in | ios::binary);
+        infile.seekg(sizeof(Index), ios::beg);
+        while(infile.read((char*)&emp, sizeof(Employee))) {
+            cout << emp.id << "\t" << emp.name << "\t" << emp.designation << "\t" << emp.salary << endl;
+        }
+        infile.close();
+    }
+};
+
+int main() {
+    EmployeeDB db;
+
+    db.addRecord({1, "Rohan", "Employee", 89676});
+    db.addRecord({4, "Rahul", "Employee", 90825});
+    db.addRecord({5, "Ram", "HR", 104980});
+    db.addRecord({2, "Ramesh", "Employee", 902853});
+    db.addRecord({6, "Rakesh", "Receptionist", 88549});
+
+    db.display();
+
+    return 0;
+}
