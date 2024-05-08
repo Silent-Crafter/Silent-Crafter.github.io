@@ -53,26 +53,21 @@ public:
                 } else {
                     if (!operations.empty())
                         curr = operations.top();
-
                 }
             }
         }
     }
 
-    void __postfix(Node* node, vector<Node*>& order) {
+    void __postfix(Node* node) {
         if (!node) return;
 
         __postfix(node->left, order);
         __postfix(node->right, order);
-        order.push_back(node);
+        cout << node->op;
     }
 
     void postfix() {
-        vector<Node*> order;
-        __postfix(this->root, order);
-        for(auto elem : order) {
-            cout << elem->op;
-        }
+        __postfix(this->root);
         cout << endl;
     }
 
