@@ -12,8 +12,7 @@ class Set:
 
     def contains(self, item):
         return item in self.data
-
-    def union(self, other_set):
+def union(self, other_set):
         result = self
         for item in other_set:
             if item not in result:
