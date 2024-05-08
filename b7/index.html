@@ -59,33 +59,20 @@ public:
         }
     }
 
-    void postOrder() {
-        if (!root) {
-            return;
+    void __postfix(Node* node, vector<Node*>& order) {
+        if (!node) return;
+
+        __postfix(node->left, order);
+        __postfix(node->right, order);
+        order.push_back(node);
+    }
+
+    void postfix() {
+        vector<Node*> order;
+        __postfix(this->root, order);
+        for(auto elem : order) {
+            cout << elem->op;
         }
-
-        stack<Node*> s, order;
-        s.emplace(root);
-        Node* temp;
-        while (!s.empty()) {
-            temp = s.top();
-            s.pop();
-            order.emplace(temp);
-
-            if (temp->left) {
-                s.emplace(temp->left);
-            }
-            if (temp->right) {
-                s.emplace(temp->right);
-            }
-        }
-
-        while (!order.empty()) {
-            auto curr = order.top();
-            order.pop();
-            cout << curr->op;
-        }
-
         cout << endl;
     }
 
@@ -100,7 +87,7 @@ int main() {
     ExpressionTree et;
     et.fromPrefixNotation("+--a*bc/def");
     cout << "POST ORDER: ";
-    et.postOrder();
+    et.postfix();
     et.clear();
     return 0;
 }
