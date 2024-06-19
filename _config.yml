@@ -1,0 +1,32 @@
+title: Clumsy-Blog
+description: "Clumsy Cody's blog site"
+author:
+  name: "Nikhil Solanke"
+  email: "nikhilsolanke5@gmail.com"
+  url: "https://clumsycody.me"
+
+baseurl: /
+
+source: .
+destination: ./_site
+permalink: /:title
+paginate: 3
+paginate_path: /page/:num/
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+future: true
+plugins:
+  - jekyll-seo-tag
+  - jekyll-paginate
+  - jekyll-sitemap
+
+# Custom variables
+owner : "ClumsyCody"
+year : "2024"
